@@ -40,7 +40,6 @@ export async function AddToRedisList(messageRequest: types.MessageRequest) {
             text: messageRequest.text,
             timestamp: messageRequest.timestamp
         }))
-        console.log(result)
     } catch (e) {
         console.error(e)
         throw new Error(`Could not add message to redis array for destination:${messageRequest.destination}`)
