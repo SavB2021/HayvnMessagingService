@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/src/app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "tsc && node dist/src/app.js",
     "tsc": "tsc",
     "build": "tsc"

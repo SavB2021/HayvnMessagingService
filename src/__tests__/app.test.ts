@@ -1,15 +1,18 @@
 import request from "supertest";
 import app from '../app';
-import * as ops from '../ops/ops'
 
+jest.mock('../ops/redis-client')
 
 describe("POST /", () => {
-    it("returns status code 200 if correct post body is passed", async () => {
+    it("returns status code 200 if correct post body is passed", async() => {
         const res = await request(app)
             .post("/")
-            .send({destination: "test", text: "test", timestamp: 'test'})
+            .send({destination : "test", text: "test", timestamp: 'test'});
 
-        expect(ops.ReceiveNewMessage).toHaveBeenCalled()
+        expect(res.statusCode).toEqual(200);
     })
 })
+
+
+
 

@@ -4,11 +4,14 @@ import * as types from '../../types'
 const redis = require('redis');
 const client = redis.createClient({url: process.env.REDIS_URL});
 
-(async () => {
-    // Connect to redis server
-     await client.connect();
-    console.log('connect')
-})();
+async function Connect(){
+    try {
+        await client.ping()
+    }catch (e) {
+        console.log("Redis not connected")
+        await client.connect()
+    }
+}
 
 export async function GetListByKey(key: string): Promise<any> {
     try{
@@ -31,6 +34,7 @@ export async function GetAllkeys(): Promise<string[]> {
 }
 
 export async function AddToRedisList(messageRequest: types.MessageRequest) {
+    await Connect()
     try {
         const result = await client.rPush(messageRequest.destination, JSON.stringify({
             text: messageRequest.text,
@@ -58,6 +62,7 @@ export async function FlushCache() {
 // function that runs every 10 seconds to aggregate and send messages
 setInterval(async function () {
     console.log("Sending to server")
+    await Connect()
     try {
         const keys = await GetAllkeys()
         if (keys.length >= 1) {
