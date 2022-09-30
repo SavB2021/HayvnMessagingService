@@ -61,7 +61,7 @@ Before running the app, please ensure that docker is installed and running on yo
 
 1. In the docker-compose.yml file, add the correct URL for the external server that the batched messages will be sent to:
 <br/>
-```
+``` json
     environment:
     - REDIS_URL=redis://cache
     - NODE_ENV=development
@@ -69,14 +69,19 @@ Before running the app, please ensure that docker is installed and running on yo
     - SERVER_URL=test
 ```
 2.  Navigate to the root directory of the app
-2. Build the app with ```docker-compose build```
+2. Build the app with 
+```yaml
+docker-compose build
+```
 3. Run the app container along with the redis container with ```docker-compose up```
 4. You should see the following line in your terminal 
 <br />
-```Server started on port 3001```
+```yaml
+Server started on port 3001
+```
 5. In postman(or a similar app) use the following request to test the ingress route
    <br />
-```
+``` yaml
 curl --location --request POST 'localhost:3001' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -120,7 +125,7 @@ When researching how to secure express app endpoints I successfully followed the
  <br/>
  If this endpoint were secured then auth credentials could be added to the config body as shown below
  <br/>
- ```
+ ``` js
    const config = {
       method: 'post',
       url: process.env.SERVER_URL,
